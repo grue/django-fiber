@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, AnonymousUser
 from django.http import HttpResponse
 from django.test import TestCase, RequestFactory
 
+import django
 import fiber.middleware
 from fiber.middleware import AdminPageMiddleware
 from fiber.models import Page, ContentItem, PageContentItem
@@ -41,7 +42,10 @@ class TestAtFiberLoginRedirect(TestCase):
     def test_response_redirect_querystring_with_fiber(self):
         """Middleware strips @fiber from querystring"""
         response = self.client.get('/empty/?%40fiber')
-        self.assertRedirects(response, '/empty/')
+        if django.VERSION[:2] < (1, 9):
+            self.assertRedirects(response, '/empty/')
+        else:
+            self.assertRedirects(response, '/empty/?')
 
     def test_response_redirect_querystring_and_at_fiber(self):
         """Middleware strips @fiber from querystring, rest of qs stays intact"""

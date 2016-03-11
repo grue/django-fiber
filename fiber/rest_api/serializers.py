@@ -70,7 +70,7 @@ class ImageSerializer(serializers.HyperlinkedModelSerializer):
         read_only_fields = ('created', )
 
 
-class FiberPaginationSerializer(pagination.BasePaginationSerializer):
+class FiberPaginationSerializer(pagination.BasePagination):
     """
     Simple-data-grid expects a total_pages key for a paginated view.
     Simple-data-grid expects rows as the key for objects.
