@@ -25,7 +25,7 @@ Convinced? Want to use Django Fiber in your own Django project? Then follow the 
 
 ## Installation
 
-We're assuming you are using Django 1.4-1.8.
+We're assuming you are using Django 1.8+.
 
     $ pip install django-fiber
 
@@ -94,19 +94,9 @@ These dependencies are automatically installed:
 
 ## Post-installation
 
-Create database tables for Django >= 1.7
+Create database tables for Django >= 1.8
 
     $ python manage.py migrate
-
-Create database tables for Django < 1.7:
-
-    $ python manage.py syncdb
-
-Migrating database tables for Django < 1.7 using South 1.0:
-
-    $ python manage.py migrate
-
-Then the original South migrations in the `south_migrations` directory will be used, following the recommendation at <http://south.readthedocs.org/en/latest/releasenotes/1.0.html#library-migration-path>
 
 All static Fiber files need to be symlinked in (or copied to) your media folder:
 
