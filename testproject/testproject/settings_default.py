@@ -79,9 +79,12 @@ STATICFILES_DIRS = (
 
 # List of finder classes that know how to find static files in
 # various locations.
-STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
-    'compressor.finders.CompressorFinder',
-)
+if isinstance(DEFAULT_SETTINGS.STATICFILES_FINDERS, list):
+    STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS.append('compressor.finders.CompressorFinder')
+elif isinstance(DEFAULT_SETTINGS.STATICFILES_FINDERS, tuple):
+    STATICFILES_FINDERS = DEFAULT_SETTINGS.STATICFILES_FINDERS + (
+        'compressor.finders.CompressorFinder',
+    )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '%-$o$r0p4xqkwx)w$$r2-r^s9%%a^7$d76ygv2s+2*lxv+g+yc'
@@ -93,13 +96,22 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.eggs.Loader',
 )
 
-MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'fiber.middleware.ObfuscateEmailAddressMiddleware',
-    'fiber.middleware.AdminPageMiddleware',
-)
+if isinstance(DEFAULT_SETTINGS.STATICFILES_FINDERS, list):
+    MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + [
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'fiber.middleware.ObfuscateEmailAddressMiddleware',
+        'fiber.middleware.AdminPageMiddleware'
+    ]
+elif isinstance(DEFAULT_SETTINGS.MIDDLEWARE_CLASSES, tuple):
+    MIDDLEWARE_CLASSES = DEFAULT_SETTINGS.MIDDLEWARE_CLASSES + (
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'fiber.middleware.ObfuscateEmailAddressMiddleware',
+        'fiber.middleware.AdminPageMiddleware',
+    )
 
 ROOT_URLCONF = 'testproject.urls'
 
@@ -112,9 +124,14 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
-    'django.core.context_processors.request',
-)
+if isinstance(DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS, list):
+    TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS.append(
+        'django.core.context_processors.request'
+    )
+elif isinstance(DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS, tuple):
+    TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
+        'django.core.context_processors.request',
+    )
 
 INSTALLED_APPS = (
     'fiber',
